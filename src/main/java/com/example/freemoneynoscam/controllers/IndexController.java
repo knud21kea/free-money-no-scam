@@ -26,12 +26,7 @@ public class IndexController
     public String addEmail(@RequestParam("email") String email, RedirectAttributes attributes)
     {
         attributes.addAttribute("email", email);
-        String redirect = "/";
-        if (ves.isEmailValid(email))
-        {
-            redirect = "/confirmation";
-        }
-        return "redirect:" + redirect;
+        return (ves.isEmailValid(email)) ? "redirect:/confirmation" : "redirect:/";
     }
 
     @GetMapping("/confirmation")
