@@ -8,10 +8,6 @@ public class DbHandler
     private Connection con;
     private Statement stmt;
 
-    public DbHandler()
-    {
-    }
-
     public void connectDB()
     {
         try
@@ -25,7 +21,6 @@ public class DbHandler
             System.out.println("Unable to connect");
         }
     }
-
 
     public void makeTableEmails()
     {
@@ -42,7 +37,6 @@ public class DbHandler
             System.out.println("DB error.");
         }
     }
-
 
     public void addEmail(String email)
     {

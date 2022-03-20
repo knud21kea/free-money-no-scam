@@ -26,7 +26,8 @@ public class IndexController
     {
         attributes.addAttribute("email", email);
         String redirect = "/";
-        if (ves.isEmailValid(email)) {
+        if (ves.isEmailValid(email))
+        {
             redirect = "/confirmation";
         }
         return "redirect:" + redirect;
@@ -35,7 +36,7 @@ public class IndexController
     @GetMapping("/confirmation")
     public String emailAdded(@RequestParam String email, Model model)
     {
-        model.addAttribute("email",email);
+        model.addAttribute("email", email);
         db.connectDB();
         db.makeTableEmails(); // returns if table exists
         db.addEmail(email);
