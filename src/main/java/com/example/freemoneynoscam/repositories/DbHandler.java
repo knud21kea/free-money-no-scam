@@ -8,6 +8,13 @@ public class DbHandler
     private Connection con;
     private Statement stmt;
 
+    public void updateDb(String email)
+    {
+        connectDB();
+        makeTableEmails(); // returns if table exists
+        addEmail(email);
+    }
+
     public void connectDB()
     {
         try
