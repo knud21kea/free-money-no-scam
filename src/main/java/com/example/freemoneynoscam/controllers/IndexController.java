@@ -1,7 +1,5 @@
 package com.example.freemoneynoscam.controllers;
 
-import com.example.freemoneynoscam.repositories.DbHandler;
-import com.example.freemoneynoscam.services.UpdateEmailService;
 import com.example.freemoneynoscam.services.ValidateEmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class IndexController
 {
-    ValidateEmailService ves = new ValidateEmailService();
-    UpdateEmailService ues = new UpdateEmailService();
+    private final ValidateEmailService ves = new ValidateEmailService();
 
     @GetMapping("/")
     public String start()
@@ -33,7 +30,6 @@ public class IndexController
     public String emailAdded(@RequestParam String email, Model model)
     {
         model.addAttribute("email", email);
-        ues.addEmailToDb(email); // add validated email address to database
         return "confirmation";
     }
 }
