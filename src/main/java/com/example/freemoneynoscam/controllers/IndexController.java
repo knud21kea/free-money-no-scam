@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.ArrayList;
 
 @Controller
 public class IndexController
@@ -35,5 +36,14 @@ public class IndexController
     {
         model.addAttribute("email", email);
         return "confirmation";
+    }
+
+    // Adds a list of added emails from the db, like a dev mode feature
+    @GetMapping("/list")
+    public String listEmails(Model model)
+    {
+        ArrayList<String> emails = ves.getAddedEmails(); // Service layer interrogates the repository
+        model.addAttribute("emailList",emails); // Could be a model class, but it's just a single string
+        return "list";
     }
 }

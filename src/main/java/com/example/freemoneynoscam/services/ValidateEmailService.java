@@ -2,6 +2,8 @@ package com.example.freemoneynoscam.services;
 
 import com.example.freemoneynoscam.repositories.DbHandler;
 
+import java.util.ArrayList;
+
 public class ValidateEmailService
 {
     private final DbHandler db = new DbHandler();
@@ -17,5 +19,9 @@ public class ValidateEmailService
     public void addValidEmail(String email)
     {
         db.updateDb(email); // Could check if already added
+    }
+
+    public ArrayList<String> getAddedEmails() {
+        return db.loadAddresses();
     }
 }

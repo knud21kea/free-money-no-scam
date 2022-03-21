@@ -1,6 +1,7 @@
 package com.example.freemoneynoscam.repositories;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DbHandler
 {
@@ -26,6 +27,17 @@ public class DbHandler
         } catch (Exception e)
         {
             System.out.println("Unable to connect");
+        }
+    }
+
+    public void closeConnection()
+    {
+        try
+        {
+            con.close();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -57,5 +69,30 @@ public class DbHandler
         {
             System.out.println("DB error.");
         }
+        closeConnection();
+    }
+
+    public ArrayList<String> loadAddresses()
+    {
+        ArrayList<String> emails = new ArrayList<>();
+        try
+        {
+            String sqlString = "SELECT Email_address FROM emails";
+
+            connectDB();
+
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(sqlString);
+
+            while (rs.next())
+            {
+                emails.add(rs.getString("Email_address"));
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return emails;
     }
 }
