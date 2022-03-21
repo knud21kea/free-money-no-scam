@@ -11,10 +11,11 @@ public class ValidateEmailService
         // Only valid if address has exactly 1 '@'
         int trunk = email.length() - email.replace("@", "").length();
         // And at least 1 '.'
-        boolean validEmail = trunk == 1 && email.contains(".");
-        if (validEmail) {
-           //db.updateDb(email); // Comment out to run test
-        }
-        return validEmail;
+        return trunk == 1 && email.contains(".");
+    }
+
+    public void addValidEmail(String email)
+    {
+        db.updateDb(email); // Could check if already added
     }
 }

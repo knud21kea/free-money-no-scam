@@ -23,7 +23,11 @@ public class IndexController
     public String addEmail(@RequestParam("email") String email, RedirectAttributes attributes)
     {
         attributes.addAttribute("email", email);
-        return (ves.isEmailValid(email)) ? "redirect:/confirmation" : "redirect:/";
+        boolean validEmail = ves.isEmailValid(email);
+        if (validEmail) {
+            ves.addValidEmail(email); // Should this logic be in service layer?
+        }
+        return (validEmail) ? "redirect:/confirmation" : "redirect:/";
     }
 
     @GetMapping("/confirmation")
