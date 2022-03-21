@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.ArrayList;
 
 @Controller
@@ -15,21 +16,22 @@ public class IndexController
 {
     private final ValidateEmailService ves = new ValidateEmailService();
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String start()
     {
         return "index";
     }
 
-    @PostMapping("/")
+    @PostMapping("/index")
     public String addEmail(@RequestParam("email") String email, RedirectAttributes attributes)
     {
         attributes.addAttribute("email", email);
         boolean validEmail = ves.isEmailValid(email);
-        if (validEmail) {
-            ves.addValidEmail(email); // Should this logic be in service layer?
+        if (validEmail)
+        {
+            ves.addValidEmail(email);
         }
-        return (validEmail) ? "redirect:/confirmation" : "redirect:/";
+        return (validEmail) ? "redirect:/confirmation" : "redirect:/rejection";
     }
 
     @GetMapping("/confirmation")
@@ -39,12 +41,19 @@ public class IndexController
         return "confirmation";
     }
 
+    @GetMapping("/rejection")
+    public String emailInvalid(@RequestParam String email, Model model)
+    {
+        model.addAttribute("email", email);
+        return "rejection";
+    }
+
     // Adds a list of added emails from the db, like a dev mode feature
     @GetMapping("/list")
     public String listEmails(Model model)
     {
         ArrayList<Email> emails = ves.getAddedEmails(); // Service layer interrogates the repository
-        model.addAttribute("emailList",emails); // Thymeleaf adds list of email objects
+        model.addAttribute("emailList", emails); // Thymeleaf adds list of email objects
         return "list";
     }
 }

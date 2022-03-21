@@ -22,7 +22,8 @@ public class ValidateEmailService
         db.updateDb(email); // Could check if already added
     }
 
-    public ArrayList<Email> getAddedEmails() {
+    public ArrayList<Email> getAddedEmails()
+    {
         return db.loadAddresses();
     }
 }
