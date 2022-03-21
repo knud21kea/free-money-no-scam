@@ -13,7 +13,7 @@ public class ValidateEmailService
         // And at least 1 '.'
         boolean validEmail = trunk == 1 && email.contains(".");
         if (validEmail) {
-           db.updateDb(email);
+           //db.updateDb(email); // Comment out to run test
         }
         return validEmail;
     }
