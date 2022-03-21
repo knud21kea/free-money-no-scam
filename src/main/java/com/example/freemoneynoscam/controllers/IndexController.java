@@ -1,5 +1,6 @@
 package com.example.freemoneynoscam.controllers;
 
+import com.example.freemoneynoscam.models.Email;
 import com.example.freemoneynoscam.services.ValidateEmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +43,8 @@ public class IndexController
     @GetMapping("/list")
     public String listEmails(Model model)
     {
-        ArrayList<String> emails = ves.getAddedEmails(); // Service layer interrogates the repository
-        model.addAttribute("emailList",emails); // Could be a model class, but it's just a single string
+        ArrayList<Email> emails = ves.getAddedEmails(); // Service layer interrogates the repository
+        model.addAttribute("emailList",emails); // Thymeleaf adds list of email objects
         return "list";
     }
 }

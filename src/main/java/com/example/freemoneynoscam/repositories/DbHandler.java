@@ -1,5 +1,7 @@
 package com.example.freemoneynoscam.repositories;
 
+import com.example.freemoneynoscam.models.Email;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -72,9 +74,9 @@ public class DbHandler
         closeConnection();
     }
 
-    public ArrayList<String> loadAddresses()
+    public ArrayList<Email> loadAddresses()
     {
-        ArrayList<String> emails = new ArrayList<>();
+        ArrayList<Email> emails = new ArrayList<>();
         try
         {
             String sqlString = "SELECT Email_address FROM emails";
@@ -86,7 +88,7 @@ public class DbHandler
 
             while (rs.next())
             {
-                emails.add(rs.getString("Email_address"));
+                emails.add(new Email(rs.getString("Email_address")));
             }
         } catch (SQLException e)
         {

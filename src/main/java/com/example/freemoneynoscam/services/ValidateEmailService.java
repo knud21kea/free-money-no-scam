@@ -1,5 +1,6 @@
 package com.example.freemoneynoscam.services;
 
+import com.example.freemoneynoscam.models.Email;
 import com.example.freemoneynoscam.repositories.DbHandler;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class ValidateEmailService
         db.updateDb(email); // Could check if already added
     }
 
-    public ArrayList<String> getAddedEmails() {
+    public ArrayList<Email> getAddedEmails() {
         return db.loadAddresses();
     }
 }
