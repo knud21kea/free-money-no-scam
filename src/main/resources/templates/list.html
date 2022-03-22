@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>List addresses</title>
+    <link rel="stylesheet" th:href="@{style.css}" href="../static/style.css">
 </head>
-<body>
-<h3>Currently added email addresses</h3>
-<ul>
-    <li th:each="email: ${emailList}">
-        <span th:text="${email.getEmailAddress()}"></span>
-    </li>
-</ul>
+<body class="list">
+<div>
+    <button class="point" onclick="location.href='../index'">Back to Index</button>
+    <h3>Currently added email addresses</h3>
+    <ul>
+        <li th:each="email: ${emailList}">
+            <span th:text="${email.getEmailAddress()}"></span>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

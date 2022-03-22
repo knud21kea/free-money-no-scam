@@ -6,8 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 public class IndexController
 {
     private final ValidateEmailService ves = new ValidateEmailService();
+    private String email;
 
     @GetMapping("/index")
     public String start()
@@ -23,26 +23,27 @@ public class IndexController
     }
 
     @PostMapping("/index")
-    public String addEmail(@RequestParam("email") String email, RedirectAttributes attributes)
+    public String addEmail(WebRequest emailFromForm)
     {
-        attributes.addAttribute("email", email);
+        email = emailFromForm.getParameter("email");
         boolean validEmail = ves.isEmailValid(email);
         if (validEmail)
         {
             ves.addValidEmail(email);
         }
         return (validEmail) ? "redirect:/confirmation" : "redirect:/rejection";
+
     }
 
     @GetMapping("/confirmation")
-    public String emailAdded(@RequestParam String email, Model model)
+    public String emailAdded(Model model)
     {
         model.addAttribute("email", email);
         return "confirmation";
     }
 
     @GetMapping("/rejection")
-    public String emailInvalid(@RequestParam String email, Model model)
+    public String emailInvalid(Model model)
     {
         model.addAttribute("email", email);
         return "rejection";
