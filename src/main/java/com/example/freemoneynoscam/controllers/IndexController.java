@@ -1,3 +1,18 @@
+/*
+Free Money Startup
+Exercise with PRG (Post Redirect Get)
+With a full stack (HTML5/CSS3, Java Spring/Thymeleaf, MySQL) application, local network
+Original CSS and base code @Nicklas Dean
+
+There are 4 endpoints:
+/index - where the user can enter an email address in a text input form (POST)
+/confirmation - redirect to a page confirming a successful database addition (GET)
+/rejection - redirect to an explanation of failure, either invalid or already existing (GET)
+/list - showing all records in the database (GET)
+
+@Graham John Heaven - KEA exercise March 2022
+*/
+
 package com.example.freemoneynoscam.controllers;
 
 import com.example.freemoneynoscam.models.Email;
@@ -14,7 +29,7 @@ import java.util.ArrayList;
 public class IndexController
 {
     private final ValidateEmailService ves = new ValidateEmailService();
-    private String email;
+    private String email, invalid;
 
     @GetMapping("/index")
     public String start()
@@ -27,12 +42,9 @@ public class IndexController
     {
         email = emailFromForm.getParameter("email");
         boolean validEmail = ves.isEmailValid(email);
-        if (validEmail)
-        {
-            ves.addValidEmail(email);
-        }
-        return (validEmail) ? "redirect:/confirmation" : "redirect:/rejection";
-
+        boolean emailExits = ves.isEmailExisting(email);
+        invalid = ves.addValidEmail(email, validEmail, emailExits);
+        return (validEmail && !emailExits) ? "redirect:/confirmation" : "redirect:/rejection";
     }
 
     @GetMapping("/confirmation")
@@ -46,6 +58,7 @@ public class IndexController
     public String emailInvalid(Model model)
     {
         model.addAttribute("email", email);
+        model.addAttribute("reason", invalid);
         return "rejection";
     }
 

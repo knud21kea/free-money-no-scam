@@ -9,8 +9,11 @@
 <div class="content">
     <h2>Sorry 🙁</h2>
     <p>
+        <span>The email address '</span>
         <span th:text="${email}"></span>
-        <span> seems to be invalid.</span><br>
+        <span>' seems to be </span>
+        <span th:text="${reason}"></span>
+        <br>
     </p>
     <div>
         <button class="point" onclick="location.href='../index'">Why not try again</button>
