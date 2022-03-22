@@ -41,10 +41,11 @@ public class IndexController
     public String addEmail(WebRequest emailFromForm)
     {
         email = emailFromForm.getParameter("email");
+        assert email != null;
         boolean validEmail = ves.isEmailValid(email);
-        boolean emailExits = ves.isEmailExisting(email);
-        invalid = ves.addValidEmail(email, validEmail, emailExits);
-        return (validEmail && !emailExits) ? "redirect:/confirmation" : "redirect:/rejection";
+        boolean emailExists = ves.isEmailExisting(email);
+        invalid = ves.addValidEmail(email, validEmail, emailExists);
+        return (validEmail && !emailExists) ? "redirect:/confirmation" : "redirect:/rejection";
     }
 
     @GetMapping("/confirmation")
