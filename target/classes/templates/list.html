@@ -7,13 +7,16 @@
 </head>
 <body class="list">
 <div>
-    <button class="point" onclick="location.href='../index'">Back to Index</button>
-    <h3>Currently added email addresses</h3>
+    <div class="center">
+        <button class="point" onclick="location.href='../index'">Back to Index</button>
+    </div>
+    <h3 class="center">-------------------- Currently added email addresses --------------------</h3>
     <ul>
         <li th:each="email: ${emailList}">
             <span th:text="${email.getEmailAddress()}"></span>
         </li>
     </ul>
+    <br>
 </div>
 </body>
 </html>
